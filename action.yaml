@@ -3,7 +3,7 @@ description: "Packages and uploads, replaces reference in (eg) template.yaml"
 inputs:
 
   role-to-assume-arn:
-    description: "The secret with the ARN of the role to assume (required) eg ${{ secrets.ROLE_TO_ASSUME_ARN }}"
+    description: "The secret with the ARN of the role to assume (required) eg secrets.ROLE_TO_ASSUME_ARN"
     required: true
   container-sign-kms-key-arn:
     description: "The secret with the ARN of the key to sign container images"
@@ -19,10 +19,10 @@ inputs:
     description: "The working directory containing the first Fargate app (required)"
     required: true
   artifact-bucket-name-1:
-    description: "The secret with the name of the first artifact S3 bucket (required) eg ${{ secrets.ARTIFACT_BUCKET_NAME_1 }}"
+    description: "The secret with the name of the first artifact S3 bucket (required) eg secrets.ARTIFACT_BUCKET_NAME_1"
     required: true
   ecr-repo-name-1:
-    description: "The secret with the name of the first ECR Repo (required)  eg ${{ secrets.ecr_repo_NAME_1 }}"
+    description: "The secret with the name of the first ECR Repo (required)  eg secrets.ecr_repo_NAME_1"
     required: true
   working-directory-2:
     description: "The working directory containing the second Fargate app"
