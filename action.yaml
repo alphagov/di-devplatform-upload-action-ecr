@@ -32,7 +32,7 @@ inputs:
     description: "The key of the secret with the name of the second artifact S3 bucket"
     required: false
     default: none
-  ecr-repo-2:
+  ecr-repo-name-2:
     description: "The key of the secret with the name of the second ECR Repo"
     required: false
     default: none
@@ -44,7 +44,7 @@ inputs:
     description: "The key of the secret with the name of the third artifact S3 bucket"
     required: false
     default: none
-  ecr-repo-3:
+  ecr-repo-name-3:
     description: "The key of the secret with the name of the third ECR Repo"
     required: false
     default: none
