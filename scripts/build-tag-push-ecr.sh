@@ -1,6 +1,6 @@
 #! /bin/bash
 echo 'here'
-set -eu
+set -e
 
 echo "building image(s)"
 #WORKING_DIRECTORY_1="1"
