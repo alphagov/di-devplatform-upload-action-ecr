@@ -12,8 +12,8 @@ inputs:
     description: "The name of the CF template for the first application. This defaults to template.yaml"
     required: false
     default: template.yaml
-  working-directory:
-    description: "The working directory containing the first Fargate app (required)"
+  main-working-directory:
+    description: "The working directory to run the main script from"
     required: true
   working-directory-1:
     description: "The working directory containing the first Fargate app (required)"
