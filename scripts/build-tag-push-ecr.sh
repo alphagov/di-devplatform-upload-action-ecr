@@ -1,5 +1,5 @@
 #! /bin/bash
-echo 'here'
+
 set -e
 
 echo "building image(s)"
