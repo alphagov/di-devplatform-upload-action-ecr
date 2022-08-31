@@ -53,6 +53,9 @@ runs:
   using: "composite"
 
   steps:
+    - name: Checkout repo
+      uses: actions/checkout@v2
+
     - name: Change to working directory
       run: cd ${{ inputs.main-working-directory }}
       shell: bash
