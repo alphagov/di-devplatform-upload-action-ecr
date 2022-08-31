@@ -53,9 +53,9 @@ runs:
   using: "composite"
 
   steps:
-    #- name: Change to working directory
-    #  run: cd ${{ inputs.working-directory }}
-    #  shell: bash
+    - name: Change to working directory
+      run: cd ${{ inputs.main-working-directory }}
+      shell: bash
 
     - name: Set up Python 3.8
       uses: actions/setup-python@v2
