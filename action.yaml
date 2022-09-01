@@ -61,10 +61,6 @@ runs:
     - name: Checkout repo
       uses: actions/checkout@v2
 
-    - name: Change to working directory
-      run: cd ${{ inputs.main-working-directory }}
-      shell: bash
-
     - name: Set up Python 3.8
       uses: actions/setup-python@v2
       with:
