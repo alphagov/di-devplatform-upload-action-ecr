@@ -8,51 +8,19 @@ inputs:
   container-sign-kms-key-arn:
     description: "The secret with the ARN of the key to sign container images"
     required: true
-  template-file-1:
+  template-file:
     description: "The name of the CF template for the first application. This defaults to template.yaml"
     required: false
     default: template.yaml
-  working-directory-1:
+  working-directory:
     description: "The working directory containing the first Fargate app"
     required: false
-  artifact-bucket-name-1:
+  artifact-bucket-name:
     description: "The secret with the name of the first artifact S3 bucket (required) eg secrets.ARTIFACT_BUCKET_NAME_1"
     required: true
-  ecr-repo-name-1:
+  ecr-repo-name:
     description: "The secret with the name of the first ECR Repo (required)  eg secrets.ecr_repo_NAME_1"
     required: true
-  template-file-2:
-    description: "The name of the CF template for the second application."
-    required: false
-    default: template.yaml
-  working-directory-2:
-    description: "The working directory containing the second Fargate app"
-    required: false
-    default: "none"
-  artifact-bucket-name-2:
-    description: "The key of the secret with the name of the second artifact S3 bucket"
-    required: false
-    default: none
-  ecr-repo-name-2:
-    description: "The key of the secret with the name of the second ECR Repo"
-    required: false
-    default: none
-  template-file-3:
-    description: "The name of the CF template for the third application."
-    required: false
-    default: template.yaml
-  working-directory-3:
-    description: "The working directory containing the third Fargate app"
-    required: false
-    default: "none"
-  artifact-bucket-name-3:
-    description: "The key of the secret with the name of the third artifact S3 bucket"
-    required: false
-    default: none
-  ecr-repo-name-3:
-    description: "The key of the secret with the name of the third ECR Repo"
-    required: false
-    default: none
 
 runs:
   using: "composite"
