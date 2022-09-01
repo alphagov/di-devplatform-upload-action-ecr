@@ -3,6 +3,8 @@
 set -e
 
 echo "building image(s)"
+echo 'current dir =' $(pwd)
+initialdir=$(pwd)
 #WORKING_DIRECTORY_1="1"
 #WORKING_DIRECTORY_2="2"
 #WORKING_DIRECTORY_3="3"
@@ -10,11 +12,13 @@ echo "building image(s)"
 count=1
 while [ $count -le 4 ]
 do
+  cd ${!initialdir}
   working_dir="WORKING_DIRECTORY_$count"
   ecr_repo_name="ECR_REPO_NAME_$count"
   artifact_bucket_name="ARTIFACT_BUCKET_NAME_$count"
   if [ "${!working_dir}" != "none" ]; then
     echo "Packaging app from ${!working_dir}"
+    cd ${!working_dir}
     docker build -t $ECR_REGISTRY/${!ecr_repo_name}:$GITHUB_SHA .
     docker push $ECR_REGISTRY/${!ecr_repo_name}:$GITHUB_SHA
     cosign sign --key awskms:///${CONTAINER_SIGN_KMS_KEY_ARN} $ECR_REGISTRY/${!ecr_repo_name}:$GITHUB_SHA
