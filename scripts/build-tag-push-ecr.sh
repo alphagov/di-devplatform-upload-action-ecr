@@ -12,7 +12,7 @@ initialdir=$(pwd)
 count=1
 while [ $count -le 4 ]
 do
-  cd ${!initialdir}
+  cd "${initialdir}"
   working_dir="WORKING_DIRECTORY_$count"
   ecr_repo_name="ECR_REPO_NAME_$count"
   artifact_bucket_name="ARTIFACT_BUCKET_NAME_$count"
