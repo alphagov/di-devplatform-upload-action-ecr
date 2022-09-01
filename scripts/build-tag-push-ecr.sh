@@ -4,8 +4,8 @@ set -eu
 
 echo "building image(s)"
 
-cd "$WORKING_DIR"
-echo "Packaging app in /$WORKING_DIR"
+cd "${WORKING_DIRECTORY}"
+echo "Packaging app in /$WORKING_DIRECTORY"
 
 docker build -t "$ECR_REGISTRY/$ECR_REPO_NAME:$GITHUB_SHA" .
 docker push "$ECR_REGISTRY/$ECR_REPO_NAME:$GITHUB_SHA"
