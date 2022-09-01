@@ -8,26 +8,27 @@ inputs:
   container-sign-kms-key-arn:
     description: "The secret with the ARN of the key to sign container images"
     required: true
-  template-file:
+  template-file-1:
     description: "The name of the CF template for the first application. This defaults to template.yaml"
     required: false
     default: template.yaml
-  main-working-directory:
-    description: "The working directory to run the main script from"
-    required: true
   working-directory-1:
-    description: "The working directory containing the first Fargate app (required)"
-    required: true
+    description: "The working directory containing the first Fargate app"
+    required: false
   artifact-bucket-name-1:
     description: "The secret with the name of the first artifact S3 bucket (required) eg secrets.ARTIFACT_BUCKET_NAME_1"
     required: true
   ecr-repo-name-1:
     description: "The secret with the name of the first ECR Repo (required)  eg secrets.ecr_repo_NAME_1"
     required: true
+  template-file-2:
+    description: "The name of the CF template for the second application."
+    required: false
+    default: template.yaml
   working-directory-2:
     description: "The working directory containing the second Fargate app"
     required: false
-    default: none
+    default: "none"
   artifact-bucket-name-2:
     description: "The key of the secret with the name of the second artifact S3 bucket"
     required: false
@@ -36,10 +37,14 @@ inputs:
     description: "The key of the secret with the name of the second ECR Repo"
     required: false
     default: none
+  template-file-3:
+    description: "The name of the CF template for the third application."
+    required: false
+    default: template.yaml
   working-directory-3:
     description: "The working directory containing the third Fargate app"
     required: false
-    default: none
+    default: "none"
   artifact-bucket-name-3:
     description: "The key of the secret with the name of the third artifact S3 bucket"
     required: false
@@ -84,17 +89,19 @@ runs:
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         CONTAINER_SIGN_KMS_KEY_ARN: ${{ inputs.container-sign-kms-key-arn }}
-        TEMPLATE_FILE: ${{ inputs.template-file }}
         GITHUB_SHA: ${{ github.sha }}
         WORKING_DIRECTORY_1: ${{ inputs.working-directory-1 }}
-        ARTIFACT_BUCKET_NAME_1: ${{ inputs.artifact-bucket-name-1 }}
-        ECR_REPO_NAME_1: ${{ inputs.ecr-repo-name-1 }}
         WORKING_DIRECTORY_2: ${{ inputs.working-directory-2 }}
-        ARTIFACT_BUCKET_NAME_2: ${{ inputs.artifact-bucket-name-2 }}
-        ECR_REPO_NAME_2: ${{ inputs.ecr-repo-name-2 }}
         WORKING_DIRECTORY_3: ${{ inputs.working-directory-3 }}
-        ARTIFACT_BUCKET_NAME_3: ${{ inputs.artifact-bucket-name-3 }}
+        TEMPLATE_FILE_1: ${{ inputs.template-file-1 }}
+        TEMPLATE_FILE_2: ${{ inputs.template-file-2 }}
+        TEMPLATE_FILE_3: ${{ inputs.template-file-3 }}
+        ECR_REPO_NAME_1: ${{ inputs.ecr-repo-name-1 }}
+        ECR_REPO_NAME_2: ${{ inputs.ecr-repo-name-2 }}
         ECR_REPO_NAME_3: ${{ inputs.ecr-repo-name-3 }}
+        ARTIFACT_BUCKET_NAME_1: ${{ inputs.artifact-bucket-name-1 }}
+        ARTIFACT_BUCKET_NAME_2: ${{ inputs.artifact-bucket-name-2 }}
+        ARTIFACT_BUCKET_NAME_3: ${{ inputs.artifact-bucket-name-3 }}
 
       run: ${{ github.action_path }}/scripts/build-tag-push-ecr.sh
       shell: bash
