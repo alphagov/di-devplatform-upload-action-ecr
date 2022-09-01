@@ -86,18 +86,10 @@ runs:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         CONTAINER_SIGN_KMS_KEY_ARN: ${{ inputs.container-sign-kms-key-arn }}
         GITHUB_SHA: ${{ github.sha }}
-        WORKING_DIRECTORY_1: ${{ inputs.working-directory-1 }}
-        WORKING_DIRECTORY_2: ${{ inputs.working-directory-2 }}
-        WORKING_DIRECTORY_3: ${{ inputs.working-directory-3 }}
-        TEMPLATE_FILE_1: ${{ inputs.template-file-1 }}
-        TEMPLATE_FILE_2: ${{ inputs.template-file-2 }}
-        TEMPLATE_FILE_3: ${{ inputs.template-file-3 }}
-        ECR_REPO_NAME_1: ${{ inputs.ecr-repo-name-1 }}
-        ECR_REPO_NAME_2: ${{ inputs.ecr-repo-name-2 }}
-        ECR_REPO_NAME_3: ${{ inputs.ecr-repo-name-3 }}
-        ARTIFACT_BUCKET_NAME_1: ${{ inputs.artifact-bucket-name-1 }}
-        ARTIFACT_BUCKET_NAME_2: ${{ inputs.artifact-bucket-name-2 }}
-        ARTIFACT_BUCKET_NAME_3: ${{ inputs.artifact-bucket-name-3 }}
+        WORKING_DIRECTORY: ${{ inputs.working-directory }}
+        TEMPLATE_FILE: ${{ inputs.template-file }}
+        ECR_REPO_NAME: ${{ inputs.ecr-repo-name }}
+        ARTIFACT_BUCKET_NAME: ${{ inputs.artifact-bucket-name }}
 
       run: ${{ github.action_path }}/scripts/build-tag-push-ecr.sh
       shell: bash
