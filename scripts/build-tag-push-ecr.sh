@@ -22,7 +22,7 @@ do
     docker push $ECR_REGISTRY/${!ecr_repo_name}:$GITHUB_SHA
     cosign sign --key awskms:///${CONTAINER_SIGN_KMS_KEY_ARN} $ECR_REGISTRY/${!ecr_repo_name}:$GITHUB_SHA
 
-    sam package --template_file="${!template_file}" --s3-bucket="${!artifact_bucket_name}" --output-template-file=cf-template.yaml
+    sam package --template-file="${!template_file}" --s3-bucket="${!artifact_bucket_name}" --output-template-file=cf-template.yaml
 
     sed -i "s|CONTAINER-IMAGE-PLACEHOLDER|$ECR_REGISTRY/${!ecr_repo_name}:$GITHUB_SHA|" cf-template.yaml
     zip template.zip cf-template.yaml
