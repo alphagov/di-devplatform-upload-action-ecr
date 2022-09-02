@@ -1,0 +1,59 @@
+# Upload Action
+
+This is an action that allows you to upload a built SAM Fargate application to S3 using GitHub Actions.
+
+The action packages, signs, and uploads the application to the specified S3 bucket.
+
+## Action Inputs
+
+| Input                      | Required | Description                                                                            | Example                                                                              |
+|----------------------------|----------|----------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------|
+| artifact-bucket-name       | true     | The secret with the name of the artifact S3 bucket                                     | artifact-bucket-1234                                                                 |
+| container-sign-kms-key-arn | true     | The secret with the name of the Signing Profile resource in AWS                        | signing-profile-1234                                                                 |
+| working-directory          | false    | The working directory containing the SAM Fargate app and the template file             | ./sam-fg-app                                                                         |
+| template-file              | false    | The name of the CF template for the application. This defaults to template.yaml        | custom-template.yaml                                                                 |
+| role-to-assume-arn         | true     | The secret with the GitHub Role ARN from the pipeline stack                            | arn:aws:iam::0123456789999:role/myawesomeapppipeline-GitHubActionsRole-16HIKMTBBDL8Y |
+| ecr-repo-name              | true     | The secret with the name of the ECR repo created by the app-container-repository stack | app-container-repository-tobytraining-containerrepository-i6gdfkdnwrrm               |
+
+
+## Usage Example
+
+Pull in the action in your workflow as below, making sure to specify the release version you require.
+
+```yaml
+- name: Deploy SAM Fargate app
+  uses: alphagov/di-devplatform-upload-action-fg@<version_number>
+  with:
+    artifact-bucket-name: ${{ secrets.ARTIFACT_BUCKET_NAME }}
+    container-sign-kms-key-arn: ${{ secrets.SIGNING_PROFILE_NAME }}
+    working-directory: ./sam-fg-app
+    template-file: custom-template.yaml
+    role-to-assume-arn: ${{ secrets.ROLE_TO_ASSUME }}}
+```
+
+## Requirements
+
+- pre-commit:
+
+  ```shell
+  brew install pre-commit
+  pre-commit install -tpre-commit -tprepare-commit-msg -tcommit-msg
+  ```
+
+## Releasing updates
+
+We
+follow [recommended best practices](https://docs.github.com/en/actions/creating-actions/releasing-and-maintaining-actions)
+for releasing new versions of the action.
+
+### Non-breaking changes
+
+Release a new minor or patch version as appropriate, then update the base major version release (and any minor versions)
+to point to this latest appropriate commit. e.g.: If the latest major release is v2, and you have added a non-breaking
+feature, release v2.1.0 and point v2 to the same commit as v2.1.0.
+
+NOTE: Until v3 is released, you will need to point both v1 and v2 to the latest version since there are no breaking changes between them.
+
+### Breaking changes
+
+Release a new major version as normal following semantic versioning.
