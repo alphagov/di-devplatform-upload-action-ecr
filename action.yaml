@@ -1,4 +1,4 @@
-name: "Upload Fargate Containers"
+name: "Upload Containers to ECR, update references in CF templates"
 description: "Packages and uploads, replaces reference in (eg) template.yaml"
 inputs:
 
@@ -9,17 +9,17 @@ inputs:
     description: "The secret with the ARN of the key to sign container images"
     required: true
   template-file:
-    description: "The name of the CF template for the first application. This defaults to template.yaml"
+    description: "The name of the CF template for the application. This defaults to template.yaml"
     required: false
     default: template.yaml
   working-directory:
-    description: "The working directory containing the first Fargate app"
+    description: "The working directory containing the  app"
     required: false
   artifact-bucket-name:
-    description: "The secret with the name of the first artifact S3 bucket (required) eg secrets.ARTIFACT_BUCKET_NAME_1"
+    description: "The secret with the name of the artifact S3 bucket (required) eg secrets.ARTIFACT_BUCKET_NAME"
     required: true
   ecr-repo-name:
-    description: "The secret with the name of the first ECR Repo (required)  eg secrets.ecr_repo_NAME_1"
+    description: "The secret with the name of the ECR Repo (required)  eg secrets.ecr_repo_NAME"
     required: true
 
 runs:
