@@ -15,7 +15,7 @@ echo "Running sam build on template file"
 sam build --template-file="$TEMPLATE_FILE"
 mv .aws-sam/build/template.yaml cf-template.yaml
 
-if grep -q "CONTAINER-IMAGE-PLACEHOLDER"; then
+if grep -q "CONTAINER-IMAGE-PLACEHOLDER" cf-template.yaml; then
   echo "Replacing \"CONTAINER-IMAGE-PLACEHOLDER\" with new ECR image ref"
   sed -i "s|CONTAINER-IMAGE-PLACEHOLDER|$ECR_REGISTRY/$ECR_REPO_NAME:$GITHUB_SHA|" cf-template.yaml
 else
