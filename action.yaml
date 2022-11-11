@@ -13,13 +13,13 @@ inputs:
     required: false
     default: template.yaml
   working-directory:
-    description: "The working directory containing the  app"
+    description: "The working directory containing the app"
     required: false
   artifact-bucket-name:
     description: "The secret with the name of the artifact S3 bucket (required) eg secrets.ARTIFACT_BUCKET_NAME"
     required: true
   ecr-repo-name:
-    description: "The secret with the name of the ECR Repo (required)  eg secrets.ecr_repo_NAME"
+    description: "The secret with the name of the ECR Repo (required) eg secrets.ECR_REPO_NAME"
     required: true
 
 runs:
