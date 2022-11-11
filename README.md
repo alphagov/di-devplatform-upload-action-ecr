@@ -28,7 +28,8 @@ Pull in the action in your workflow as below, making sure to specify the release
     container-sign-kms-key-arn: ${{ secrets.SIGNING_PROFILE_NAME }}
     working-directory: ./sam-ecr-app
     template-file: custom-template.yaml
-    role-to-assume-arn: ${{ secrets.ROLE_TO_ASSUME }}}
+    role-to-assume-arn: ${{ secrets.ROLE_TO_ASSUME }}
+    ecr-repo-name: ${{ secrets.ECR_REPO_NAME }}
 ```
 
 ## Requirements
