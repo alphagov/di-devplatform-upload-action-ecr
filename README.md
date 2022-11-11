@@ -24,12 +24,12 @@ Pull in the action in your workflow as below, making sure to specify the release
 - name: Deploy SAM app to ECR
   uses: alphagov/di-devplatform-upload-action-ecr@<version_number>
   with:
-    artifact-bucket-name: ${{ secrets.ARTIFACT_BUCKET_NAME }}
-    container-sign-kms-key-arn: ${{ secrets.SIGNING_PROFILE_NAME }}
+    artifact-bucket-name: ${{ secrets.ARTIFACT_SOURCE_BUCKET_NAME }}
+    container-sign-kms-key-arn: ${{ secrets.CONTAINER_SIGN_KMS_KEY }}
     working-directory: ./sam-ecr-app
     template-file: custom-template.yaml
-    role-to-assume-arn: ${{ secrets.ROLE_TO_ASSUME }}
-    ecr-repo-name: ${{ secrets.ECR_REPO_NAME }}
+    role-to-assume-arn: ${{ secrets.GH_ACTIONS_ROLE_ARN }}
+    ecr-repo-name: ${{ secrets.ECR_REPOSITORY }}
 ```
 
 ## Requirements
