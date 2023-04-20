@@ -21,6 +21,10 @@ inputs:
   ecr-repo-name:
     description: "The secret with the name of the ECR Repo (required) eg secrets.ECR_REPOSITORY"
     required: true
+  dockerfile:
+    description: The Dockerfile to use for the build
+    required: false
+    default: Dockerfile
 
 runs:
   using: "composite"
@@ -58,6 +62,7 @@ runs:
         TEMPLATE_FILE: ${{ inputs.template-file }}
         ECR_REPO_NAME: ${{ inputs.ecr-repo-name }}
         ARTIFACT_BUCKET_NAME: ${{ inputs.artifact-bucket-name }}
+        DOCKERFILE: ${{ inputs.dockerfile }}
 
       run: ${{ github.action_path }}/scripts/build-tag-push-ecr.sh
       shell: bash
