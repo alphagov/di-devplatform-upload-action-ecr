@@ -14,6 +14,7 @@ inputs:
   working-directory:
     description: "The working directory containing the app"
     required: false
+    default: .
   artifact-bucket-name:
     description: "The secret with the name of the artifact S3 bucket (required) eg secrets.ARTIFACT_SOURCE_BUCKET_NAME"
     required: true
