@@ -1,10 +1,9 @@
 name: "Upload Containers to ECR, update references in CF templates"
 description: "Packages and uploads, replaces reference in (eg) template.yaml"
 inputs:
-
   role-to-assume-arn:
     description: "The secret with the ARN of the role to assume (required) eg secrets.GH_ACTIONS_ROLE_ARN"
-    required: true
+    required: true"
   container-sign-kms-key-arn:
     description: "The secret with the ARN of the key to sign container images e.g. secrets.CONTAINER_SIGN_KMS_KEY"
     required: true
@@ -29,12 +28,17 @@ inputs:
     description: The Dockerfile path to use for the build
     required: false
     default: .
+  checkout-repo:
+    description: Defines whether the action should checkout the repo or not
+    required: false
+    default: "true"
 
 runs:
   using: "composite"
 
   steps:
     - name: Checkout repo
+      if: ${{ inputs.checkout-repo == 'true' }}
       uses: actions/checkout@v3
 
     - name: Set up Python 3.8
