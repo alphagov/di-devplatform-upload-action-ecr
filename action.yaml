@@ -29,7 +29,7 @@ inputs:
     required: false
     default: .
   checkout-repo:
-    description: Defines whether the action should checkout the repo or not
+    description: Checks out the repo as the first step of the action. Default "true".
     required: false
     default: "true"
 
