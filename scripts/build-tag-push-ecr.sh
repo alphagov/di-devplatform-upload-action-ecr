@@ -4,16 +4,15 @@ set -eu
 
 echo "building image(s)"
 
-cd "${WORKING_DIRECTORY}"
 echo "Packaging app in /$WORKING_DIRECTORY"
 
-docker build -t "$ECR_REGISTRY/$ECR_REPO_NAME:$GITHUB_SHA" -f $DOCKERFILE .
+docker build -t "$ECR_REGISTRY/$ECR_REPO_NAME:$GITHUB_SHA" -f "$DOCKERFILE" "$DOCKER_BUILD_PATH"
 docker push "$ECR_REGISTRY/$ECR_REPO_NAME:$GITHUB_SHA"
 cosign sign --key "awskms:///${CONTAINER_SIGN_KMS_KEY_ARN}" "$ECR_REGISTRY/$ECR_REPO_NAME:$GITHUB_SHA"
 
 echo "Running sam build on template file"
-sam build --template-file="$TEMPLATE_FILE"
-mv .aws-sam/build/template.yaml cf-template.yaml
+sam build --template-file="$TEMPLATE_FILE" --base-dir="$WORKING_DIRECTORY"
+mv $WORKING_DIRECTORY/.aws-sam/build/template.yaml cf-template.yaml
 
 if grep -q "CONTAINER-IMAGE-PLACEHOLDER" cf-template.yaml; then
     echo "Replacing \"CONTAINER-IMAGE-PLACEHOLDER\" with new ECR image ref"

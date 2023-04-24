@@ -25,6 +25,10 @@ inputs:
     description: The Dockerfile to use for the build
     required: false
     default: Dockerfile
+  docker-build-path:
+    description: The Dockerfile path to use for the build
+    required: false
+    default: .
 
 runs:
   using: "composite"
@@ -63,6 +67,7 @@ runs:
         ECR_REPO_NAME: ${{ inputs.ecr-repo-name }}
         ARTIFACT_BUCKET_NAME: ${{ inputs.artifact-bucket-name }}
         DOCKERFILE: ${{ inputs.dockerfile }}
+        DOCKER_BUILD_PATH: ${{ inputs.docker-build-path }}
 
       run: ${{ github.action_path }}/scripts/build-tag-push-ecr.sh
       shell: bash
