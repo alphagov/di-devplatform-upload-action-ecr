@@ -2,22 +2,19 @@
 
 set -eu
 
-if [ -z $DOCKER_BUILD_PATH ]; then
-    DOCKER_BUILD_PATH=$WORKING_DIRECTORY
-fi
+: "${DOCKER_BUILD_PATH:=.}"
 
 echo "Building image"
 
-docker build -t "$ECR_REGISTRY/$ECR_REPO_NAME:$GITHUB_SHA" -f "$DOCKER_BUILD_PATH"/"$DOCKERFILE" "$DOCKER_BUILD_PATH"
+docker build -t "$ECR_REGISTRY/$ECR_REPO_NAME:$GITHUB_SHA" -f "$DOCKERFILE" "$DOCKER_BUILD_PATH"
 docker push "$ECR_REGISTRY/$ECR_REPO_NAME:$GITHUB_SHA"
 
-if [ ${CONTAINER_SIGN_KMS_KEY_ARN} != "none" ]; then
+if [[ $CONTAINER_SIGN_KMS_KEY_ARN ]]; then
     cosign sign --key "awskms:///${CONTAINER_SIGN_KMS_KEY_ARN}" "$ECR_REGISTRY/$ECR_REPO_NAME:$GITHUB_SHA"
 fi
 
 echo "Running sam build on template file"
-cd $WORKING_DIRECTORY
-sam build --template-file="$TEMPLATE_FILE"
+sam build --template-file="$TEMPLATE_FILE" ${SAM_BASE_DIR:+--base-dir=$SAM_BASE_DIR}
 mv .aws-sam/build/template.yaml cf-template.yaml
 
 if grep -q "CONTAINER-IMAGE-PLACEHOLDER" cf-template.yaml; then
