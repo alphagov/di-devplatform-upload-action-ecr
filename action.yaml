@@ -6,7 +6,8 @@ inputs:
     required: true
   container-sign-kms-key-arn:
     description: "The secret with the ARN of the key to sign container images e.g. secrets.CONTAINER_SIGN_KMS_KEY"
-    required: true
+    required: false
+    default: "none"
   template-file:
     description: "The name of the CF template for the application. This defaults to template.yaml"
     required: false
@@ -14,7 +15,6 @@ inputs:
   working-directory:
     description: "The working directory containing the app"
     required: false
-    default: .
   artifact-bucket-name:
     description: "The secret with the name of the artifact S3 bucket (required) eg secrets.ARTIFACT_SOURCE_BUCKET_NAME"
     required: true
@@ -25,10 +25,6 @@ inputs:
     description: The Dockerfile to use for the build
     required: false
     default: Dockerfile
-  docker-build-path:
-    description: The Dockerfile path to use for the build
-    required: false
-    default: .
   checkout-repo:
     description: Checks out the repo as the first step of the action. Default "true".
     required: false

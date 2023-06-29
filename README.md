@@ -9,12 +9,13 @@ The action packages, signs, and uploads the application to the specified ECR and
 | Input                      | Required | Description                                                                            | Example                                                                              |
 |----------------------------|----------|----------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------|
 | artifact-bucket-name       | true     | The secret with the name of the artifact S3 bucket                                     | artifact-bucket-1234                                                                 |
-| container-sign-kms-key-arn | true     | The secret with the name of the Signing Profile resource in AWS                        | signing-profile-1234                                                                 |
+| container-sign-kms-key-arn | false     | The secret with the name of the Signing Profile resource in AWS                        | signing-profile-1234                                                                 |
 | working-directory          | false    | The working directory containing the SAM app and the template file                     | ./sam-ecr-app                                                                        |
 | template-file              | false    | The name of the CF template for the application. This defaults to template.yaml        | custom-template.yaml                                                                 |
 | role-to-assume-arn         | true     | The secret with the GitHub Role ARN from the pipeline stack                            | arn:aws:iam::0123456789999:role/myawesomeapppipeline-GitHubActionsRole-16HIKMTBBDL8Y |
 | ecr-repo-name              | true     | The secret with the name of the ECR repo created by the app-container-repository stack | app-container-repository-tobytraining-containerrepository-i6gdfkdnwrrm               |
-
+| dockerfile                 | false     | The Dockerfile to use for the build | Dockerfile
+| checkout-repo                 | false     | Checks out the repo as the first step of the action. Default "true". | "true"
 
 ## Usage Example
 
@@ -43,9 +44,7 @@ Pull in the action in your workflow as below, making sure to specify the release
 
 ## Releasing updates
 
-We
-follow [recommended best practices](https://docs.github.com/en/actions/creating-actions/releasing-and-maintaining-actions)
-for releasing new versions of the action.
+We follow [recommended best practices](https://docs.github.com/en/actions/creating-actions/releasing-and-maintaining-actions) for releasing new versions of the action.
 
 ### Non-breaking changes
 
