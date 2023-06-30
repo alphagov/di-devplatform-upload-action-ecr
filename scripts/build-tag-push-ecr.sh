@@ -2,18 +2,21 @@
 
 set -eu
 
-echo "building image(s)"
-cd "$WORKING_DIRECTORY"
-echo "Packaging sam app in $WORKING_DIRECTORY"
+if [ -z $DOCKER_BUILD_PATH ]; then
+    DOCKER_BUILD_PATH=$WORKING_DIRECTORY
+fi
 
-docker build -t "$ECR_REGISTRY/$ECR_REPO_NAME:$GITHUB_SHA" -f "$DOCKERFILE" .
+echo "Building image"
+
+docker build -t "$ECR_REGISTRY/$ECR_REPO_NAME:$GITHUB_SHA" -f "$DOCKER_BUILD_PATH"/"$DOCKERFILE" "$DOCKER_BUILD_PATH"
 docker push "$ECR_REGISTRY/$ECR_REPO_NAME:$GITHUB_SHA"
 
-if ${CONTAINER_SIGN_KMS_KEY_ARN} != "none"; then
+if [ ${CONTAINER_SIGN_KMS_KEY_ARN} != "none" ]; then
     cosign sign --key "awskms:///${CONTAINER_SIGN_KMS_KEY_ARN}" "$ECR_REGISTRY/$ECR_REPO_NAME:$GITHUB_SHA"
 fi
 
 echo "Running sam build on template file"
+cd $WORKING_DIRECTORY
 sam build --template-file="$TEMPLATE_FILE"
 mv .aws-sam/build/template.yaml cf-template.yaml
 

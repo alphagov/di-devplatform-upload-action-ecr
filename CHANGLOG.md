@@ -9,6 +9,10 @@ and still follows the `MAJOR`, `MINOR`, & `PATCH` convention.
 
 See [here](https://keepachangelog.com/en/1.1.0/#how) for a list of `Types of changes` labels.
 
+## [v1.0.1] - 2023-06-29
+### Added
+- Added the ability to use a docker file outside of the working directory functionality back in
+
 ## [v1.0.0] - 2023-06-29
 ### Added
 - Initial release
