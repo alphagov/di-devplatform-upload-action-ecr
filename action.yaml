@@ -11,6 +11,9 @@ inputs:
     description: "The name of the CF template for the application. This defaults to template.yaml"
     required: false
     default: template.yaml
+  working-directory:
+    description: "Deprecated - use sam-base-directory instead"
+    required: false
   sam-base-directory:
     description: "The base directory to use when building the SAM app; defaults to the template file's location"
     required: false
@@ -69,7 +72,7 @@ runs:
         CONTAINER_SIGN_KMS_KEY_ARN: ${{ inputs.container-sign-kms-key-arn }}
         GITHUB_SHA: ${{ github.sha }}
         TEMPLATE_FILE: ${{ inputs.template-file }}
-        SAM_BASE_DIR: ${{ inputs.sam-base-directory }}
+        SAM_BASE_DIR: ${{ inputs.sam-base-directory || inputs.working-directory }}
         ECR_REPO_NAME: ${{ inputs.ecr-repo-name }}
         ARTIFACT_BUCKET_NAME: ${{ inputs.artifact-bucket-name }}
         DOCKERFILE: ${{ inputs.dockerfile }}
