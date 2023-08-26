@@ -7,15 +7,16 @@ inputs:
   container-sign-kms-key-arn:
     description: "The secret with the ARN of the key to sign container images e.g. secrets.CONTAINER_SIGN_KMS_KEY"
     required: false
-    default: "none"
   template-file:
     description: "The name of the CF template for the application. This defaults to template.yaml"
     required: false
     default: template.yaml
   working-directory:
-    description: "The working directory containing the app"
+    description: "Deprecated - use sam-base-directory instead"
     required: false
-    default: .
+  sam-base-directory:
+    description: "The base directory to use when building the SAM app; defaults to the template file's location"
+    required: false
   artifact-bucket-name:
     description: "The secret with the name of the artifact S3 bucket (required) eg secrets.ARTIFACT_SOURCE_BUCKET_NAME"
     required: true
@@ -56,8 +57,11 @@ runs:
     - name: Login to Amazon ECR
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
+      with:
+        mask-password: true
 
     - name: Install Cosign
+      if: ${{ inputs.container-sign-kms-key-arn != null }}
       uses: sigstore/cosign-installer@main
       with:
         cosign-release: 'v1.9.0'
@@ -67,8 +71,8 @@ runs:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         CONTAINER_SIGN_KMS_KEY_ARN: ${{ inputs.container-sign-kms-key-arn }}
         GITHUB_SHA: ${{ github.sha }}
-        WORKING_DIRECTORY: ${{ inputs.working-directory }}
         TEMPLATE_FILE: ${{ inputs.template-file }}
+        SAM_BASE_DIR: ${{ inputs.sam-base-directory || inputs.working-directory }}
         ECR_REPO_NAME: ${{ inputs.ecr-repo-name }}
         ARTIFACT_BUCKET_NAME: ${{ inputs.artifact-bucket-name }}
         DOCKERFILE: ${{ inputs.dockerfile }}
