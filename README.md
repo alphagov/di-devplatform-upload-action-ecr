@@ -1,3 +1,7 @@
+# Archived
+
+This repository has been archived. We will continue to develop it at the new location: [govuk-one-login/devplatform-upload-action-ecr][1]
+
 # Upload Action
 
 This is an action that allows you to upload a built SAM application to S3 and ECR using GitHub Actions.
@@ -57,3 +61,5 @@ NOTE: Until v3 is released, you will need to point both v1 and v2 to the latest 
 ### Breaking changes
 
 Release a new major version as normal following semantic versioning.
+
+[1]: https://github.com/govuk-one-login/devplatform-upload-action-ecr
