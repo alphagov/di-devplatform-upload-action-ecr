@@ -2,6 +2,8 @@
 
 set -eu
 
+echo "::warning title=alphagov/di-devplatform-upload-action-ecr::The repository hosting this upload action has been archived. New location https://github.com/govuk-one-login/devplatform-upload-action-ecr"
+
 if [ -z $DOCKER_BUILD_PATH ]; then
     DOCKER_BUILD_PATH=$WORKING_DIRECTORY
 fi
